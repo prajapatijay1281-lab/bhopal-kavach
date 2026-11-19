@@ -1,0 +1,11 @@
+{
+  "name": "Remix Jal Rakshak Bhopal",
+  "description": "Integrated Flood Emergency Alert \u0026 Smart Waste Management Portal for Bhopal, Madhya Pradesh.",
+  "requestFramePermissions": [
+    "geolocation",
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

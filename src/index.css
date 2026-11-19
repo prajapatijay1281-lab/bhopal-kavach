@@ -1,0 +1,218 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+@layer base {
+  :root {
+    --font-display: "Plus Jakarta Sans", "Noto Sans Devanagari", system-ui, -apple-system, sans-serif;
+    --font-sans: "Public Sans", "Noto Sans Devanagari", system-ui, -apple-system, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #f8fafc;
+    color: #0f172a;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+button,
+a,
+select {
+  touch-action: manipulation;
+}
+
+@media (max-width: 640px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
+/* Custom Leaflet pulsing marker for active flood hazards (#EA580C / #DC2626) */
+.flood-pulse-marker {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.flood-pulse-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background-color: rgba(234, 88, 12, 0.42);
+  animation: jal-flood-pulse 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.flood-pulse-core {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background-color: #ea580c;
+  border: 2px solid #ffffff;
+  box-shadow: 0 1px 4px rgba(10, 25, 47, 0.45);
+}
+
+@keyframes jal-flood-pulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.92;
+  }
+  75%, 100% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flood-pulse-ring {
+    animation: none;
+  }
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
+  box-shadow: 0 10px 25px -5px rgba(10, 25, 47, 0.16);
+  border: 1px solid #e2e8f0;
+  padding: 0;
+}
+
+.leaflet-popup-content {
+  margin: 12px 14px;
+  font-family: var(--font-sans);
+}
+
+/* ============================================================================
+   Admin Command Center — Clean A4 Print & PDF Export Media Queries
+   ============================================================================ */
+@page {
+  size: A4 landscape;
+  margin: 12mm 14mm;
+}
+
+@media print {
+  html,
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    font-size: 10pt !important;
+  }
+
+  /* Hide global navigation, interactive controls, and floating overlays */
+  header,
+  nav,
+  footer,
+  .admin-print-hide,
+  .admin-print-interactive-split,
+  .admin-print-no-col {
+    display: none !important;
+  }
+
+  .admin-print-root {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .admin-print-header {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #0a192f !important;
+    padding-bottom: 8pt !important;
+    margin-bottom: 10pt !important;
+  }
+
+  .admin-print-kpis {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 8pt !important;
+    margin-bottom: 12pt !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .admin-print-kpis > div {
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 4pt !important;
+    padding: 6pt 8pt !important;
+    background: #f8fafc !important;
+  }
+
+  .admin-print-db-section {
+    border: 1px solid #94a3b8 !important;
+    border-radius: 4pt !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+  }
+
+  .admin-print-db-section > div {
+    overflow: visible !important;
+  }
+
+  .admin-print-db-banner {
+    background: #0a192f !important;
+    color: #ffffff !important;
+    padding: 8pt 10pt !important;
+  }
+
+  .admin-print-db-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 8.5pt !important;
+    line-height: 1.35 !important;
+  }
+
+  .admin-print-db-table thead {
+    display: table-header-group !important;
+  }
+
+  .admin-print-db-table th {
+    background: #f1f5f9 !important;
+    color: #0a192f !important;
+    border-top: 1px solid #94a3b8 !important;
+    border-bottom: 1.5px solid #0a192f !important;
+    padding: 6pt 6pt !important;
+    font-size: 7.5pt !important;
+    white-space: normal !important;
+  }
+
+  .admin-print-db-table td {
+    border-bottom: 1px solid #cbd5e1 !important;
+    padding: 5pt 6pt !important;
+    vertical-align: top !important;
+    white-space: normal !important;
+  }
+
+  .admin-print-db-table tr {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+}
